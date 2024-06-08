@@ -1,4 +1,4 @@
-export class HRVData {
+export class Data {
     constructor(data) {
         this.data = data;
     }

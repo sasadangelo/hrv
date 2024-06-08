@@ -1,4 +1,4 @@
-export class HRVUtils {
+export class DataUtils {
     constructor(data) {
         this.data = data;
     }
@@ -10,7 +10,7 @@ export class HRVUtils {
     standardDeviation() {
         const avg = this.mean();
         const squareDiffs = this.data.map(value => Math.pow(value - avg, 2));
-        const avgSquareDiff = new HRVUtils(squareDiffs).mean();
+        const avgSquareDiff = new DataUtils(squareDiffs).mean();
         return Math.sqrt(avgSquareDiff);
     }
 
@@ -18,7 +18,7 @@ export class HRVUtils {
         return this.data.map((val, idx, array) => {
             if (idx < windowSize - 1) return null;
             const window = array.slice(idx - windowSize + 1, idx + 1);
-            return Math.round(new HRVUtils(window).mean());
+            return Math.round(new DataUtils(window).mean());
         });
     }
 
@@ -26,7 +26,7 @@ export class HRVUtils {
         return this.data.map((val, idx, array) => {
             if (idx < windowSize - 1) return null;
             const window = array.slice(idx - windowSize + 1, idx + 1);
-            return Math.round(new HRVUtils(window).standardDeviation());
+            return Math.round(new DataUtils(window).standardDeviation());
         });
     }
 }
