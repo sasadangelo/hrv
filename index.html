@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HRV Monitor</title>
+    <script type="module" src="script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 <body>
-    <h1>HRV Monitor</h1>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate">
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate">
-    <button onclick="updateChart()">Update Chart</button>
-    <canvas id="hrvChart" width="400" height="200"></canvas>
-    <script src="script.js"></script>
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate">
+        <button onclick="window.app.updateChart()">Update Chart</button>
+    </div>
+    <canvas id="hrvChart" width="800" height="150"></canvas>
 </body>
 </html>
