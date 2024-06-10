@@ -16,7 +16,7 @@ export class TSSChart {
                 datasets: [
                     {
                         label: 'TSS',
-                        data: rmssdValues,
+                        data: tssValues,
                         borderColor: 'black',
                         backgroundColor: 'rgba(0,0,0,0.1)',
                         borderWidth: 1
