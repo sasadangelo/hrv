@@ -24,7 +24,7 @@ export class FCRApp {
     setDefaultDates() {
         const today = new Date().toISOString().split('T')[0];
         const pastDate = new Date();
-        pastDate.setDate(pastDate.getDate() - 30);
+        pastDate.setDate(pastDate.getDate() - 90);
         const defaultStartDate = pastDate.toISOString().split('T')[0];
 
         document.getElementById('startDate').value = defaultStartDate;
