@@ -60,10 +60,10 @@ export class FCRChart {
                         type: 'line',
                         label: 'Trend(7-Days)',
                         data: movingAvg7,
-                        borderColor: 'blue',
+                        borderColor: 'rgba(64, 124, 182, 0.8)',
                         borderWidth: 1,
                         fill: false,
-                        backgroundColor: 'blue',
+                        backgroundColor: 'rgba(64, 124, 182, 0.8)',
                         pointRadius: 0,
                         pointHoverRadius: 3
                     }
