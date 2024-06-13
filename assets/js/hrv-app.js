@@ -1,13 +1,13 @@
-import { TSSChart } from './tss-chart.js';
+import { HRVChart } from './hrv-chart.js';
 import { Data } from './data.js';
 import { DataUtils } from './data-utils.js';
 
-export class TSSApp {
+export class HRVApp {
     constructor() {
         this.allData = [];
-        this.chart = new TSSChart(document.getElementById('tssChart').getContext('2d'));
+        this.chart = new HRVChart(document.getElementById('hrvChart').getContext('2d'));
 
-        Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/tss_data.csv', {
+        Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/data/hrv_data.csv', {
             download: true,
             header: true,
             complete: results => {
@@ -37,38 +37,38 @@ export class TSSApp {
     
         // Calcola i valori per l'intera serie storica
         const allDates = this.allData.data.map(row => row.date);
-        const allTssValues = this.allData.data.map(row => parseFloat(row.rmssd));
+        const allRmssdValues = this.allData.data.map(row => parseFloat(row.rmssd));
     
-        const utils = new DataUtils(allTssValues);
-        //const allMovingAvg7 = utils.movingAverage(7);
-        //const allMovingAvg30 = utils.movingAverage(30);
-        //const allMovingStdDev30 = utils.movingStandardDeviation(30);
+        const utils = new DataUtils(allRmssdValues);
+        const allMovingAvg7 = utils.movingAverage(7);
+        const allMovingAvg30 = utils.movingAverage(30);
+        const allMovingStdDev30 = utils.movingStandardDeviation(30);
     
-        //const allUpperLimits = allMovingAvg30.map((avg, index) => {
-        //    const stdDev = allMovingStdDev30[index];
-        //    return avg !== null && stdDev !== null ? avg + stdDev : null;
-        //});
+        const allUpperLimits = allMovingAvg30.map((avg, index) => {
+            const stdDev = allMovingStdDev30[index];
+            return avg !== null && stdDev !== null ? avg + stdDev : null;
+        });
     
-        //const allLowerLimits = allMovingAvg30.map((avg, index) => {
-        //    const stdDev = allMovingStdDev30[index];
-        //    return avg !== null && stdDev !== null ? avg - stdDev : null;
-        //});
+        const allLowerLimits = allMovingAvg30.map((avg, index) => {
+            const stdDev = allMovingStdDev30[index];
+            return avg !== null && stdDev !== null ? avg - stdDev : null;
+        });
     
         // Filtra i dati per il range di date specificato
         const filteredData = this.allData.filterByDateRange(startDate, endDate);
         const filteredDates = filteredData.map(row => row.date);
-        const filteredTssValues = filteredData.map(row => parseFloat(row.tss));
+        const filteredRmssdValues = filteredData.map(row => parseFloat(row.rmssd));
     
         // Filtra i valori della media mobile e dei limiti per il range di date specificato
         const startIndex = allDates.indexOf(filteredDates[0]);
         const endIndex = allDates.indexOf(filteredDates[filteredDates.length - 1]) + 1;
     
-        //const filteredMovingAvg7 = allMovingAvg7.slice(startIndex, endIndex);
-        //const filteredUpperLimits = allUpperLimits.slice(startIndex, endIndex);
-        //const filteredLowerLimits = allLowerLimits.slice(startIndex, endIndex);
+        const filteredMovingAvg7 = allMovingAvg7.slice(startIndex, endIndex);
+        const filteredUpperLimits = allUpperLimits.slice(startIndex, endIndex);
+        const filteredLowerLimits = allLowerLimits.slice(startIndex, endIndex);
     
         // Crea il grafico con i dati filtrati
-        this.chart.createChart(filteredDates, filteredTssValues);
+        this.chart.createChart(filteredDates, filteredRmssdValues, filteredUpperLimits, filteredLowerLimits, filteredMovingAvg7);
     }
     
     updateChart() {
