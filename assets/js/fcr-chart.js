@@ -18,16 +18,30 @@ export class FCRChart {
                         type: 'bar',
                         label: 'FCR',
                         data: fcrValues,
-                        backgroundColor: 'rgba(0,0,0,0.1)',
+                        //backgroundColor: 'rgba(0,0,0,0.1)',
+                        backgroundColor: (ctx) => {
+                            const index = ctx.dataIndex;
+                            const value = ctx.dataset.data[index];
+                            const upperLimit = upperLimits[index];
+                            const lowerLimit = lowerLimits[index];
+    
+                            if (value <= upperLimit) {
+                                return 'rgba(128, 193, 191, 0.7)'; // tra upper e lower limit
+                            } else if ((value > upperLimit && value <= upperLimit * 1.1)) {
+                                return 'rgba(246, 222, 130, 0.7)'; // entro il 10% del limite
+                            } else if ((value > upperLimit * 1.1)) {
+                                return 'rgba(220, 103, 101, 0.7)'; // fuori del 10% del limite
+                            }
+                        },
                     },
                     {
                         type: 'line',
                         label: 'Upper Limit',
                         data: upperLimits,
-                        borderColor: 'rgba(64, 224, 208, 0.3)',
+                        borderColor: 'rgba(64, 124, 182, 0.2)',
                         borderWidth: 1,
                         fill: -1,
-                        backgroundColor: 'rgba(64, 224, 208, 0.3)',
+                        backgroundColor: 'rgba(64, 124, 182, 0.2)',
                         pointRadius: 0,
                         pointHoverRadius: 0
                     },
@@ -35,10 +49,10 @@ export class FCRChart {
                         type: 'line',
                         label: 'Lower Limit',
                         data: lowerLimits,
-                        borderColor: 'rgba(64, 224, 208, 0.3)',
+                        borderColor: 'rgba(64, 124, 182, 0.2)',
                         borderWidth: 1,
                         fill: +1,
-                        backgroundColor: 'rgba(64, 224, 208, 0.3)',
+                        backgroundColor: 'rgba(64, 124, 182, 0.2)',
                         pointRadius: 0,
                         pointHoverRadius: 0
                     },

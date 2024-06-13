@@ -17,8 +17,8 @@ export class TSSChart {
                     {
                         label: 'TSS',
                         data: tssValues,
-                        borderColor: 'black',
-                        backgroundColor: 'rgba(0,0,0,0.1)',
+                        borderColor: 'rgba(128, 193, 191, 0.7)',
+                        backgroundColor: 'rgba(128, 193, 191, 0.7)',
                         borderWidth: 1
                     }
                 ]
