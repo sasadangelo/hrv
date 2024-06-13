@@ -27,6 +27,7 @@ export class FCRChart {
                         borderColor: 'rgba(64, 224, 208, 0.3)',
                         borderWidth: 1,
                         fill: -1,
+                        backgroundColor: 'rgba(64, 224, 208, 0.3)',
                         pointRadius: 0,
                         pointHoverRadius: 0
                     },
@@ -43,11 +44,12 @@ export class FCRChart {
                     },
                     {
                         type: 'line',
-                        label: '7-Day Moving Average',
+                        label: 'Trend(7-Days)',
                         data: movingAvg7,
                         borderColor: 'blue',
                         borderWidth: 1,
                         fill: false,
+                        backgroundColor: 'blue',
                         pointRadius: 0,
                         pointHoverRadius: 3
                     }
