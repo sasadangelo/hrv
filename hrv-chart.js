@@ -10,37 +10,47 @@ export class HRVChart {
         }
 
         this.chart = new Chart(this.ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: dates,
                 datasets: [
                     {
+                        type: 'bar',
                         label: 'HRV',
                         data: rmssdValues,
                         borderColor: 'black',
-                        backgroundColor: 'rgba(0,0,0,0.1)',
-                        borderWidth: 1
+                        backgroundColor: 'rgba(0,0,0,0.1)'
                     },
                     {
+                        type: 'line',
                         label: 'Upper Limit',
                         data: upperLimits,
-                        borderColor: 'green',
+                        borderColor: 'rgba(64, 224, 208, 0.3)',
                         borderWidth: 1,
-                        fill: false
+                        fill: -1,
+                        pointRadius: 0,
+                        pointHoverRadius: 0
                     },
                     {
+                        type: 'line',
                         label: 'Lower Limit',
                         data: lowerLimits,
-                        borderColor: 'red',
+                        borderColor: 'rgba(64, 224, 208, 0.3)',
                         borderWidth: 1,
-                        fill: false
+                        fill: +1,
+                        backgroundColor: 'rgba(64, 224, 208, 0.3)',
+                        pointRadius: 0,
+                        pointHoverRadius: 0
                     },
                     {
+                        type: 'line',
                         label: '7-Day Moving Average',
                         data: movingAvg7,
                         borderColor: 'blue',
                         borderWidth: 1,
-                        fill: false
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 3
                     }
                 ]
             },
