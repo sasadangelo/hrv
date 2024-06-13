@@ -8,7 +8,7 @@ import './tss-chart.js';
 import { TSSApp } from './tss-app.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.app = new HRVApp();
+    window.hrvApp = new HRVApp();
     window.fcrApp = new FCRApp();
     window.tssApp = new TSSApp();
 });
