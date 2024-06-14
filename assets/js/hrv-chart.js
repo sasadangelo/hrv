@@ -21,7 +21,6 @@ export class HRVChart {
                         backgroundColor: (ctx) => {
                             const index = ctx.dataIndex;
                             const value = ctx.dataset.data[index];
-                            const upperLimit = upperLimits[index];
                             const lowerLimit = lowerLimits[index];
     
                             if (value >= lowerLimit) {
