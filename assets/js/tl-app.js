@@ -1,10 +1,10 @@
-import { PMCChart } from './pmc-chart.js';
+import { TLChart } from './tl-chart.js';
 import { Data } from './data.js';
 
-export class PMCApp {
+export class TLApp {
     constructor() {
         this.allData = [];
-        this.chart = new PMCChart(document.getElementById('pmcChart').getContext('2d'));
+        this.chart = new TLChart(document.getElementById('tlChart').getContext('2d'));
 
         Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/data/tss_data.csv', {
             download: true,
@@ -34,29 +34,30 @@ export class PMCApp {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
 
+        // Filtra i dati per il range di date specificato
         const filteredData = this.allData.filterByDateRange(startDate, endDate);
-        const dates = filteredData.map(row => row.date);
-        const tssValues = filteredData.map(row => parseFloat(row.tss));
+        const filteredDates = filteredData.map(row => row.date);
+        const filteredTSSValues = filteredData.map(row => parseFloat(row.tss));
 
-        let ctl = 0;
-        let atl = 0;
-        let tsb = 0;
+        let ctlValues = [0];
+        let atlValues = [0];
+        let tlValues = [0];
 
-        const ctlValues = [];
-        const atlValues = [];
-        const tsbValues = [];
+        for (let i = 1; i < filteredTSSValues.length; i++) {
+            const tss = filteredTSSValues[i];
+            const previousCTL = ctlValues[i - 1];
+            const previousATL = atlValues[i - 1];
 
-        tssValues.forEach((tss, index) => {
-            ctl = (tss * (1 - Math.exp(-1 / 42))) + (ctl * Math.exp(-1 / 42));
-            atl = (tss * (1 - Math.exp(-1 / 7))) + (atl * Math.exp(-1 / 7));
-            tsb = ctl - atl;
+            const ctl = (tss * (1 - Math.exp(-1 / 42))) + (previousCTL * Math.exp(-1 / 42));
+            const atl = (tss * (1 - Math.exp(-1 / 7))) + (previousATL * Math.exp(-1 / 7));
+            const tl = previousCTL !== 0 ? atl / previousCTL : 0;
 
             ctlValues.push(ctl);
             atlValues.push(atl);
-            tsbValues.push(tsb);
-        });
+            tlValues.push(tl);
+        }
 
-        this.chart.createChart(dates, tssValues, ctlValues, atlValues, tsbValues);
+        this.chart.createChart(filteredDates, tlValues);
     }
 
     updateChart() {
