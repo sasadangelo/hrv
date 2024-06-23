@@ -4,7 +4,7 @@ export class FCRChart {
         this.chart = null;
     }
 
-    createChart(dates, fcrValues, upperLimits, lowerLimits, movingAvg7) {
+    createChart(dates, fcrValues, upperLimits, lowerLimits, movingAvg7, minValue, maxValue) {
         if (this.chart) {
             this.chart.destroy();
         }
@@ -24,7 +24,7 @@ export class FCRChart {
                             const value = ctx.dataset.data[index];
                             const upperLimit = upperLimits[index];
                             const lowerLimit = lowerLimits[index];
-    
+
                             if (value <= upperLimit) {
                                 return 'rgba(128, 193, 191, 0.7)'; // tra upper e lower limit
                             } else if ((value > upperLimit && value <= upperLimit * 1.1)) {
@@ -72,7 +72,9 @@ export class FCRChart {
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        min: minValue,
+                        max: maxValue
                     }
                 }
             }

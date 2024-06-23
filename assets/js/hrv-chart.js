@@ -4,7 +4,7 @@ export class HRVChart {
         this.chart = null;
     }
 
-    createChart(dates, rmssdValues, upperLimits, lowerLimits, movingAvg7) {
+    createChart(dates, rmssdValues, upperLimits, lowerLimits, movingAvg7, minValue, maxValue) {
         if (this.chart) {
             this.chart.destroy();
         }
@@ -22,7 +22,7 @@ export class HRVChart {
                             const index = ctx.dataIndex;
                             const value = ctx.dataset.data[index];
                             const lowerLimit = lowerLimits[index];
-    
+
                             if (value >= lowerLimit) {
                                 return 'rgba(128, 193, 191, 0.7)'; // tra upper e lower limit
                             } else if ((value < lowerLimit && value >= lowerLimit * 0.9)) {
@@ -70,7 +70,9 @@ export class HRVChart {
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        min: minValue,
+                        max: maxValue
                     }
                 }
             },

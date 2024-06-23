@@ -54,6 +54,12 @@ export class FCRApp {
             return avg !== null && stdDev !== null ? avg - stdDev : null;
         });
 
+        const validAllLowerLimits = allLowerLimits.filter(value => value !== null);
+        const validAllUpperLimits = allUpperLimits.filter(value => value !== null);
+
+        const minValue = Math.floor(Math.min(...allFcrValues, ...validAllLowerLimits) / 5) * 5;
+        const maxValue = Math.ceil(Math.max(...allFcrValues, ...validAllUpperLimits) / 5) * 5;
+
         // Filtra i dati per il range di date specificato
         const filteredData = this.allData.filterByDateRange(startDate, endDate);
         const filteredDates = filteredData.map(row => row.date);
@@ -68,7 +74,7 @@ export class FCRApp {
         const filteredLowerLimits = allLowerLimits.slice(startIndex, endIndex);
 
         // Crea il grafico con i dati filtrati
-        this.chart.createChart(filteredDates, filteredFcrValues, filteredUpperLimits, filteredLowerLimits, filteredMovingAvg7);
+        this.chart.createChart(filteredDates, filteredFcrValues, filteredUpperLimits, filteredLowerLimits, filteredMovingAvg7, minValue, maxValue);
     }
 
     updateChart() {

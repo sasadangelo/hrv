@@ -34,43 +34,49 @@ export class HRVApp {
     processData() {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
-    
+
         // Calcola i valori per l'intera serie storica
         const allDates = this.allData.data.map(row => row.date);
         const allRmssdValues = this.allData.data.map(row => parseFloat(row.rmssd));
-    
+
         const utils = new DataUtils(allRmssdValues);
         const allMovingAvg7 = utils.movingAverage(7);
         const allMovingAvg30 = utils.movingAverage(30);
         const allMovingStdDev30 = utils.movingStandardDeviation(30);
-    
+
         const allUpperLimits = allMovingAvg30.map((avg, index) => {
             const stdDev = allMovingStdDev30[index];
             return avg !== null && stdDev !== null ? avg + stdDev : null;
         });
-    
+
         const allLowerLimits = allMovingAvg30.map((avg, index) => {
             const stdDev = allMovingStdDev30[index];
             return avg !== null && stdDev !== null ? avg - stdDev : null;
         });
-    
+
+        const validAllLowerLimits = allLowerLimits.filter(value => value !== null);
+        const validAllUpperLimits = allUpperLimits.filter(value => value !== null);
+
+        const minValue = Math.floor(Math.min(...allRmssdValues, ...validAllLowerLimits) / 5) * 5;
+        const maxValue = Math.ceil(Math.max(...allRmssdValues, ...validAllUpperLimits) / 5) * 5;
+
         // Filtra i dati per il range di date specificato
         const filteredData = this.allData.filterByDateRange(startDate, endDate);
         const filteredDates = filteredData.map(row => row.date);
         const filteredRmssdValues = filteredData.map(row => parseFloat(row.rmssd));
-    
+
         // Filtra i valori della media mobile e dei limiti per il range di date specificato
         const startIndex = allDates.indexOf(filteredDates[0]);
         const endIndex = allDates.indexOf(filteredDates[filteredDates.length - 1]) + 1;
-    
+
         const filteredMovingAvg7 = allMovingAvg7.slice(startIndex, endIndex);
         const filteredUpperLimits = allUpperLimits.slice(startIndex, endIndex);
         const filteredLowerLimits = allLowerLimits.slice(startIndex, endIndex);
-    
+
         // Crea il grafico con i dati filtrati
-        this.chart.createChart(filteredDates, filteredRmssdValues, filteredUpperLimits, filteredLowerLimits, filteredMovingAvg7);
+        this.chart.createChart(filteredDates, filteredRmssdValues, filteredUpperLimits, filteredLowerLimits, filteredMovingAvg7, minValue, maxValue);
     }
-    
+
     updateChart() {
         this.processData();
     }
