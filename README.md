@@ -18,7 +18,7 @@ Run the following commands:
 ```
 python3 -m venv venv
 source venv/bin/activate
-pip3 install -f requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Update manually the statistics
