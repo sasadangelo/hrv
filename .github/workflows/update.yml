@@ -1,0 +1,30 @@
+name: Update Garmin Stats
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # Questo è l'orario in UTC, che corrisponde alle 10:00 ora italiana
+  workflow_dispatch: # Aggiunge la possibilità di eseguire il workflow manualmente
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x' # Specifica la versione di Python che desideri usare
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Run update script
+      run: |
+        source venv/bin/activate
+        python3 update.py
