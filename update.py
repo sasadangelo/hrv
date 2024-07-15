@@ -42,7 +42,7 @@ def main():
             client.garth.dump(tokenstore)
             print(f"Oauth tokens stored in '{tokenstore}' directory for future use. (first method)\n")
             # Encode Oauth1 and Oauth2 tokens to base64 string and safe to file for next login (alternative way)
-            token_base64 = garmin.garth.dumps()
+            token_base64 = client.garth.dumps()
             dir_path = os.path.expanduser(tokenstore_base64)
             with open(dir_path, "w") as token_file:
                 token_file.write(token_base64)
