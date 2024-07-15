@@ -18,6 +18,14 @@ jobs:
       with:
         python-version: '3.x' # Specifica la versione di Python che desideri usare
 
+    - name: Copy .env.sample to .env
+      run: cp .env.sample .env
+
+    - name: Update .env with secrets
+      run: |
+        sed -i 's/<your email here>/${{ secrets.GARMIN_EMAIL }}/' .env
+        sed -i 's/<your password here>/${{ secrets.GARMIN_PASSWORD }}/' .env
+
     - name: Install dependencies
       run: |
         python -m venv venv

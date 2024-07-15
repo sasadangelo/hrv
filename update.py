@@ -17,8 +17,8 @@ from dotenv import load_dotenv
 
 # Load the EMAIL and PASSWORD from the .env file
 load_dotenv()
-EMAIL = os.getenv("EMAIL")
-PASSWORD = os.getenv("PASSWORD")
+EMAIL = os.getenv("GARMIN_EMAIL")
+PASSWORD = os.getenv("GARMIN_PASSWORD")
 
 tokenstore = os.getenv("GARMINTOKENS") or "~/.garminconnect"
 tokenstore_base64 = os.getenv("GARMINTOKENS_BASE64") or "~/.garminconnect_base64"
