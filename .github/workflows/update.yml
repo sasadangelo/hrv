@@ -40,7 +40,9 @@ jobs:
     - name: Check for changes
       id: check_changes
       run: |
-        git status --porcelain
+        changes=$(git status --porcelain)
+        echo "$changes"
+        echo "::set-output name=changes::$changes"
 
     - name: Commit changes
       if: steps.check_changes.outputs.stdout != ''
