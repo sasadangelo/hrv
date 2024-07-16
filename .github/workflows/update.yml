@@ -37,13 +37,6 @@ jobs:
         source venv/bin/activate
         python3 update.py
 
-    - name: Check for changes
-      id: check_changes
-      run: |
-        changes=$(git status --porcelain)
-        echo "$changes"
-        echo "changes=$changes" >> $GITHUB_ENV
-
     - name: Commit changes
       run: |
         git config --local user.email "actions@github.com"
