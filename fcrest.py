@@ -34,7 +34,7 @@ class FCRestData:
         last_date = self.get_last_date()
         today = pd.to_datetime(pd.Timestamp.today().date())
         if today > last_date:
-            print(f"Update FCR data to the {last_date.strftime('%Y-%m-%d')} date.")
+            print(f"Update FCR data to the {today.strftime('%Y-%m-%d')} date.")
             new_data = self.fetch_new_data(last_date + timedelta(days=1), today)
             new_data_df = pd.DataFrame(new_data)
             self.data = pd.concat([self.data, new_data_df], ignore_index=True)
