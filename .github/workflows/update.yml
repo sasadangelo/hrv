@@ -37,6 +37,11 @@ jobs:
         source venv/bin/activate
         python3 update.py
 
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git status --porcelain
+
     - name: Commit changes
       if: steps.check_changes.outputs.stdout != ''
       run: |
