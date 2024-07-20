@@ -40,10 +40,12 @@ jobs:
     - name: Check for changes
       id: check_changes
       run: |
-        git status --porcelain >> $GITHUB_OUTPUT
+        if [[ -n $(git status --porcelain) ]]; then
+            echo "changes=true" >> "$GITHUB_OUTPUT";
+        fi
 
     - name: Commit changes
-      if: steps.check_changes.outputs.stdout != ''
+      if: steps.check_changes.outputs.changes == 'true'
       run: |
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
@@ -52,7 +54,7 @@ jobs:
         git commit -m "Update data to $CURRENT_DATE"
 
     - name: Push changes
-      if: steps.check_changes.outputs.stdout != ''
+      if: steps.check_changes.outputs.changes == 'true'
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
