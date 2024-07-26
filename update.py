@@ -4,7 +4,7 @@ import datetime
 from garminconnect import Garmin
 from hrv import HRVData
 from fcrest import FCRestData
-from tss import TSSData
+from training import TrainingData
 from garth.exc import GarthHTTPError
 import requests
 from garminconnect import (
@@ -47,7 +47,7 @@ def main():
             with open(dir_path, "w") as token_file:
                 token_file.write(token_base64)
             print(f"Oauth tokens encoded as base64 string and saved to '{dir_path}' file for future use. (second method)\n")
-        except (FileNotFoundError, GarthHTTPError, GarminConnectAuthenticationError, requests.exceptions.HTTPError) as err:
+        except (FileNotFoundError, GarthHTTPError, GarminConnectAuthenticationError, GarminConnectConnectionError, GarminConnectTooManyRequestsError, requests.exceptions.HTTPError) as err:
             print(err)
             return None
 
@@ -64,10 +64,10 @@ def main():
     fcrest.save_csv('data/fcr_data.csv')
 
     # Load and update TSS data
-    tss = TSSData(client)
-    tss.load_csv('data/tss_data.csv')
+    tss = TrainingData(client)
+    tss.load_csv('data/training_data.csv')
     tss.update_data()
-    tss.save_csv('data/tss_data.csv')
+    tss.save_csv('data/training_data.csv')
 
     print("CSV files updated successfully.")
 

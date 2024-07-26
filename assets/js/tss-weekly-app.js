@@ -7,7 +7,7 @@ export class TSSWeeklyApp {
         this.allData = [];
         this.chart = new TSSWeeklyChart(document.getElementById('tssWeeklyChart').getContext('2d'));
 
-        Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/data/tss_data.csv', {
+        Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {
@@ -68,5 +68,9 @@ export class TSSWeeklyApp {
         const day = date.getDay();
         const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
         return new Date(date.setDate(diff));
+    }
+
+    updateChart() {
+        this.processData();
     }
 }
