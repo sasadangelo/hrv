@@ -46,8 +46,10 @@ class TrainingData:
         return new_data
 
     def update_data(self):
-        last_date = self.get_last_date()
+        last_date_str = self.get_last_date()  # Assuming this returns a string
+        last_date = pd.to_datetime(last_date_str)  # Convert the string to a Timestamp
         today = pd.to_datetime(pd.Timestamp.today().date())
+
         if today > last_date:
             print(f"Update Training data to the {today.strftime('%Y-%m-%d')} date.")
             new_data = self.fetch_new_data(last_date + timedelta(days=1), today)
