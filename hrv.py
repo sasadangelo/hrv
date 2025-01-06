@@ -1,5 +1,6 @@
-import pandas as pd
 from datetime import timedelta
+import pandas as pd
+
 
 class HRVData:
     def __init__(self, client):
@@ -8,19 +9,24 @@ class HRVData:
 
     def load_csv(self, file_path):
         print(f"Load HRV data from the {file_path} CSV file.")
-        self.data = pd.read_csv(file_path, parse_dates=['date'])
+        self.data = pd.read_csv(file_path, parse_dates=["date"])
 
     def get_last_date(self):
-        return self.data['date'].max()
+        return self.data["date"].max()
 
     def fetch_new_data(self, start_date, end_date):
         new_data = []
         for date in pd.date_range(start=start_date, end=end_date):
             try:
-                data = self.client.get_hrv_data(date.strftime('%Y-%m-%d'))
-                if (data != None):
-                    if 'hrvSummary' in data and 'lastNightAvg' in data['hrvSummary']:
-                        new_data.append({'date': date.strftime('%Y-%m-%d'), 'rmssd': data['hrvSummary']['lastNightAvg']})
+                data = self.client.get_hrv_data(date.strftime("%Y-%m-%d"))
+                if data is not None:
+                    if "hrvSummary" in data and "lastNightAvg" in data["hrvSummary"]:
+                        new_data.append(
+                            {
+                                "date": date.strftime("%Y-%m-%d"),
+                                "rmssd": data["hrvSummary"]["lastNightAvg"],
+                            }
+                        )
                 else:
                     print(f"No data available for the date {date.strftime('%Y-%m-%d')}")
             except Exception as e:
@@ -41,6 +47,6 @@ class HRVData:
     def save_csv(self, file_path):
         print(f"Save HRV data to the {file_path} CSV file.")
         # Ensure 'date' column is in datetime format
-        self.data['date'] = pd.to_datetime(self.data['date'])
-        self.data['date'] = self.data['date'].dt.strftime('%Y-%m-%d')
+        self.data["date"] = pd.to_datetime(self.data["date"])
+        self.data["date"] = self.data["date"].dt.strftime("%Y-%m-%d")
         self.data.to_csv(file_path, index=False)
