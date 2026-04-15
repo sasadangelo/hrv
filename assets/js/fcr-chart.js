@@ -25,13 +25,22 @@ export class FCRChart {
                             const upperLimit = upperLimits[index];
                             const lowerLimit = lowerLimits[index];
 
-                            if (value <= upperLimit) {
-                                return 'rgba(128, 193, 191, 0.7)'; // tra upper e lower limit
-                            } else if ((value > upperLimit && value <= upperLimit * 1.1)) {
-                                return 'rgba(246, 222, 130, 0.7)'; // entro il 10% del limite
-                            } else if ((value > upperLimit * 1.1)) {
-                                return 'rgba(220, 103, 101, 0.7)'; // fuori del 10% del limite
+                            // Se i limiti non sono ancora calcolati, mostra in grigio
+                            if (upperLimit === null || upperLimit === undefined || isNaN(upperLimit) || !isFinite(upperLimit) ||
+                                lowerLimit === null || lowerLimit === undefined || isNaN(lowerLimit) || !isFinite(lowerLimit)) {
+                                return 'rgba(169, 169, 169, 0.7)'; // grigio per dati insufficienti
                             }
+
+                            if (value <= upperLimit) {
+                                return 'rgba(128, 193, 191, 0.7)'; // verde: nel range normale
+                            } else if ((value > upperLimit && value <= upperLimit * 1.1)) {
+                                return 'rgba(246, 222, 130, 0.7)'; // giallo: entro il 10% del limite
+                            } else if ((value > upperLimit * 1.1)) {
+                                return 'rgba(220, 103, 101, 0.7)'; // rosso: fuori del 10% del limite
+                            }
+
+                            // Fallback per casi non gestiti
+                            return 'rgba(169, 169, 169, 0.7)';
                         },
                     },
                     {

@@ -18,7 +18,7 @@ export class PMCChart {
                     type: 'line',
                     pointRadius: 0,
                     pointHoverRadius: 3
-            },
+                },
                 {
                     label: 'ATL (Fatigue)',
                     data: atlValues,
@@ -72,6 +72,14 @@ export class PMCChart {
                     }
                 },
                 plugins: {
+                    title: {
+                        display: true,
+                        text: 'Performance Management Chart (PMC)',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
                     tooltip: {
                         mode: 'index',
                         intersect: false
@@ -79,6 +87,50 @@ export class PMCChart {
                     legend: {
                         display: true,
                         position: 'top'
+                    },
+                    annotation: {
+                        annotations: {
+                            // ATL Optimal Zone (0-40)
+                            atlGreen: {
+                                type: 'box',
+                                yMin: 0,
+                                yMax: 40,
+                                backgroundColor: 'rgba(128, 193, 191, 0.15)',
+                                borderWidth: 0,
+                                label: {
+                                    display: true,
+                                    content: 'ATL Optimal (0-40)',
+                                    position: {
+                                        x: 'start',
+                                        y: 'start'
+                                    },
+                                    color: 'rgba(64, 124, 182, 0.8)',
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+                            // TSB Optimal Zone (-20 to -10)
+                            tsbGreen: {
+                                type: 'box',
+                                yMin: -20,
+                                yMax: -10,
+                                backgroundColor: 'rgba(128, 193, 191, 0.15)',
+                                borderWidth: 0,
+                                label: {
+                                    display: true,
+                                    content: 'TSB Optimal (-20 to -10)',
+                                    position: {
+                                        x: 'start',
+                                        y: 'end'
+                                    },
+                                    color: 'rgba(64, 124, 182, 0.8)',
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 interaction: {

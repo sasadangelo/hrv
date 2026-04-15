@@ -7,7 +7,7 @@ export class HRVApp {
         this.allData = [];
         this.chart = new HRVChart(document.getElementById('hrvChart').getContext('2d'));
 
-        Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/data/hrv_data.csv', {
+        Papa.parse('/data/hrv_data.csv', {
             download: true,
             header: true,
             complete: results => {

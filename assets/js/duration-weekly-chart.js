@@ -1,24 +1,19 @@
-export class TLChart {
+export class DurationWeeklyChart {
     constructor(ctx) {
         this.ctx = ctx;
         this.chart = null;
     }
 
-    createChart(dates, tlValues) {
-        const colors = tlValues.map(tl => {
-            if (tl < 0.8) return 'rgba(200, 200, 200, 0.7)';
-            if (tl <= 1.3) return 'rgba(128, 193, 191, 0.7)';
-            if (tl <= 1.75) return 'rgba(246, 222, 130, 0.7)';
-            return 'rgba(220, 103, 101, 0.7)';
-        });
-
+    createChart(weekStarts, durations) {
         const data = {
-            labels: dates,
+            labels: weekStarts,
             datasets: [
                 {
-                    label: 'Injury Risk',
-                    data: tlValues,
-                    backgroundColor: colors
+                    label: 'Weekly Duration',
+                    data: durations,
+                    backgroundColor: 'rgba(128, 193, 191, 0.7)',
+                    borderColor: 'rgba(128, 193, 191, 0.7)',
+                    borderWidth: 1
                 }
             ]
         };
@@ -36,24 +31,24 @@ export class TLChart {
                     x: {
                         type: 'time',
                         time: {
-                            unit: 'day'
+                            unit: 'week'
                         },
                         title: {
                             display: true,
-                            text: 'Date'
+                            text: 'Week'
                         }
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'ACWR (ATL/CTL)'
+                            text: 'Duration (min)'
                         }
                     }
                 },
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Injury Risk (ACWR)',
+                        text: 'Weekly Volume (Duration)',
                         font: {
                             size: 16,
                             weight: 'bold'
@@ -61,18 +56,7 @@ export class TLChart {
                     },
                     tooltip: {
                         mode: 'index',
-                        intersect: false,
-                        callbacks: {
-                            label: function (context) {
-                                const value = context.parsed.y.toFixed(2);
-                                let risk = '';
-                                if (value < 0.8) risk = 'Underload';
-                                else if (value <= 1.3) risk = 'Optimal';
-                                else if (value <= 1.75) risk = 'Caution';
-                                else risk = 'High Risk';
-                                return `ACWR: ${value} (${risk})`;
-                            }
-                        }
+                        intersect: false
                     },
                     legend: {
                         display: true,
@@ -87,3 +71,5 @@ export class TLChart {
         });
     }
 }
+
+// Made with Bob

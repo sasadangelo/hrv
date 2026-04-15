@@ -1,9 +1,9 @@
-import { DistanceWeeklyChart } from './distance-weekly-chart.js';
+import { DurationWeeklyChart } from './duration-weekly-chart.js';
 
-export class DistanceWeeklyApp {
+export class DurationWeeklyApp {
     constructor() {
         this.allData = [];
-        this.chart = new DistanceWeeklyChart(document.getElementById('distanceWeeklyChart').getContext('2d'));
+        this.chart = new DurationWeeklyChart(document.getElementById('durationWeeklyChart').getContext('2d'));
 
         Papa.parse('/data/training_data.csv', {
             download: true,
@@ -11,7 +11,7 @@ export class DistanceWeeklyApp {
             complete: results => {
                 this.allData = results.data.map(d => ({
                     date: new Date(d.date),
-                    distance: parseFloat(d.distance)
+                    duration: parseFloat(d.duration)
                 }));
                 this.processData();
             }
@@ -27,23 +27,23 @@ export class DistanceWeeklyApp {
 
         const filteredData = this.allData.filter(d => d.date >= startDate && d.date <= endDate);
 
-        const weeklyDistances = this.calculateWeeklyDistances(filteredData);
+        const weeklyDurations = this.calculateWeeklyDurations(filteredData);
 
-        this.chart.createChart(Object.keys(weeklyDistances), Object.values(weeklyDistances));
+        this.chart.createChart(Object.keys(weeklyDurations), Object.values(weeklyDurations));
     }
 
-    calculateWeeklyDistances(data) {
-        const weeklyDistances = {};
+    calculateWeeklyDurations(data) {
+        const weeklyDurations = {};
 
         data.forEach(d => {
             const weekStart = this.getStartOfWeek(d.date);
-            if (!weeklyDistances[weekStart]) {
-                weeklyDistances[weekStart] = 0;
+            if (!weeklyDurations[weekStart]) {
+                weeklyDurations[weekStart] = 0;
             }
-            weeklyDistances[weekStart] += d.distance;
+            weeklyDurations[weekStart] += d.duration;
         });
 
-        return weeklyDistances;
+        return weeklyDurations;
     }
 
     getStartOfWeek(date) {
@@ -57,3 +57,5 @@ export class DistanceWeeklyApp {
         this.processData();
     }
 }
+
+// Made with Bob

@@ -6,7 +6,7 @@ export class TLApp {
         this.allData = [];
         this.chart = new TLChart(document.getElementById('tlChart').getContext('2d'));
 
-        Papa.parse('https://raw.githubusercontent.com/sasadangelo/hrv/main/data/training_data.csv', {
+        Papa.parse('/data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {
@@ -50,7 +50,7 @@ export class TLApp {
 
             const ctl = (tss * (1 - Math.exp(-1 / 42))) + (previousCTL * Math.exp(-1 / 42));
             const atl = (tss * (1 - Math.exp(-1 / 7))) + (previousATL * Math.exp(-1 / 7));
-            const tl = previousCTL !== 0 ? atl / previousCTL : 0;
+            const tl = ctl !== 0 ? atl / ctl : 0;
 
             ctlValues.push(ctl);
             atlValues.push(atl);

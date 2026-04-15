@@ -33,12 +33,13 @@ class TrainingData:
                 activity["startTimeLocal"], "%Y-%m-%d %H:%M:%S"
             )
 
-            # For the missing date set TSS=0 and Distance=0.00
+            # For the missing date set TSS=0, Distance=0.00, and Duration=0
             while current_date.date() < activity_date.date():
                 new_data.append(
                     {
                         "date": current_date.strftime("%Y-%m-%d"),
                         "distance": 0.00,
+                        "duration": 0,
                         "tss": 0,
                     }
                 )
@@ -47,19 +48,28 @@ class TrainingData:
             # Aggiungi l'attività corrente
             rounded_tss = round(activity["activityTrainingLoad"])
             rounded_distance = round(activity["distance"] / 1000, 2)
+            rounded_duration = round(
+                activity["duration"] / 60
+            )  # Convert seconds to minutes
             new_data.append(
                 {
                     "date": activity_date.strftime("%Y-%m-%d"),
                     "distance": rounded_distance,
+                    "duration": rounded_duration,
                     "tss": rounded_tss,
                 }
             )
             current_date = activity_date + timedelta(days=1)
 
-        # For the missing date set TSS=0 and Distance=0.00 until the last date
+        # For the missing date set TSS=0, Distance=0.00, and Duration=0 until the last date
         while current_date.date() <= end_date.date():
             new_data.append(
-                {"date": current_date.strftime("%Y-%m-%d"), "distance": 0.00, "tss": 0}
+                {
+                    "date": current_date.strftime("%Y-%m-%d"),
+                    "distance": 0.00,
+                    "duration": 0,
+                    "tss": 0,
+                }
             )
             current_date += timedelta(days=1)
 

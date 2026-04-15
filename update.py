@@ -4,6 +4,7 @@ from garminconnect import Garmin
 from fcrest import FCRestData
 from hrv import HRVData
 from training import TrainingData
+from vo2max import VO2MaxData
 
 # Load the EMAIL and PASSWORD from the .env file
 load_dotenv()
@@ -67,6 +68,12 @@ def main():
     tss.load_csv("data/training_data.csv")
     tss.update_data()
     tss.save_csv("data/training_data.csv")
+
+    # Load and update VO2max data
+    vo2max = VO2MaxData(client)
+    vo2max.load_csv("data/vo2max_data.csv")
+    vo2max.update_data()
+    vo2max.save_csv("data/vo2max_data.csv")
 
     print("CSV files updated successfully.")
 

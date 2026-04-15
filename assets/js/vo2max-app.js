@@ -1,13 +1,13 @@
-import { TSSChart } from './tss-chart.js';
+import { VO2MaxChart } from './vo2max-chart.js';
 import { Data } from './data.js';
 import { DataUtils } from './data-utils.js';
 
-export class TSSApp {
+export class VO2MaxApp {
     constructor() {
         this.allData = [];
-        this.chart = new TSSChart(document.getElementById('tssChart').getContext('2d'));
+        this.chart = new VO2MaxChart(document.getElementById('vo2maxChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('/data/vo2max_data.csv', {
             download: true,
             header: true,
             complete: results => {
@@ -35,19 +35,26 @@ export class TSSApp {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
 
-        // Filtra i dati per il range di date specificato
+        // Calculate values for the entire historical series
+        const allVO2MaxValues = this.allData.data.map(row => parseFloat(row.vo2max));
+
+        const validAllVO2MaxValues = allVO2MaxValues.filter(value => !isNaN(value) && isFinite(value));
+
+        const minValue = Math.floor(Math.min(...validAllVO2MaxValues) / 5) * 5;
+        const maxValue = Math.ceil(Math.max(...validAllVO2MaxValues) / 5) * 5;
+
+        // Filter data for the specified date range
         const filteredData = this.allData.filterByDateRange(startDate, endDate);
         const filteredDates = filteredData.map(row => row.date);
-        const filteredTssValues = filteredData.map(row => parseFloat(row.tss));
+        const filteredVO2MaxValues = filteredData.map(row => parseFloat(row.vo2max));
 
-        const minValue = 0;
-        const maxValue = Math.ceil(Math.max(...filteredTssValues) / 10) * 10;
-
-        // Crea il grafico con i dati filtrati
-        this.chart.createChart(filteredDates, filteredTssValues, minValue, maxValue);
+        // Create the chart with filtered data
+        this.chart.createChart(filteredDates, filteredVO2MaxValues, minValue, maxValue);
     }
 
     updateChart() {
         this.processData();
     }
 }
+
+// Made with Bob

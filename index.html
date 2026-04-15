@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
 </head>
+
 <body>
   <header>
     <div class="container">
@@ -29,7 +31,7 @@
       <ul>
         <li><a href="index.html">Overview</a></li>
         <li><a href="training.html">Training</a></li>
-        <li><a href="#">Health</a></li>
+        <li><a href="health.html">Health</a></li>
         <li><a href="#">Weight Management</a></li>
         <li><a href="#">Calculators</a></li>
       </ul>
@@ -41,12 +43,13 @@
         <input type="date" id="startDate">
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate">
-        <button onclick="window.hrvApp.updateChart();window.fcrApp.updateChart();window.tssApp.updateChart();">Update Chart</button>
+        <button onclick="window.hrvApp.updateChart();window.fcrApp.updateChart();window.tssApp.updateChart();">Update
+          Chart</button>
       </div>
       <canvas id="hrvChart" width="800" height="200"></canvas>
-      <br/>
+      <br />
       <canvas id="fcrChart" width="800" height="200"></canvas>
-      <br/>
+      <br />
       <canvas id="tssChart" width="800" height="200"></canvas>
     </main>
   </div>
@@ -57,4 +60,5 @@
     </div>
   </footer>
 </body>
+
 </html>

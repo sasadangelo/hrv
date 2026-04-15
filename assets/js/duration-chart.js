@@ -1,10 +1,10 @@
-export class TSSWeeklyChart {
+export class DurationChart {
     constructor(ctx) {
         this.ctx = ctx;
         this.chart = null;
     }
 
-    createChart(dates, tssValues) {
+    createChart(dates, durationValues, minValue, maxValue) {
         if (this.chart) {
             this.chart.destroy();
         }
@@ -15,11 +15,11 @@ export class TSSWeeklyChart {
                 labels: dates,
                 datasets: [
                     {
-                        label: 'Weekly TSS',
-                        data: tssValues,
+                        type: 'bar',
+                        label: 'Duration (min)',
+                        data: durationValues,
                         borderColor: 'rgba(128, 193, 191, 0.7)',
-                        backgroundColor: 'rgba(128, 193, 191, 0.7)',
-                        borderWidth: 1
+                        backgroundColor: 'rgba(128, 193, 191, 0.7)'
                     }
                 ]
             },
@@ -27,7 +27,7 @@ export class TSSWeeklyChart {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Weekly Volume (TSS)',
+                        text: 'Daily Duration (min)',
                         font: {
                             size: 16,
                             weight: 'bold'
@@ -41,25 +41,17 @@ export class TSSWeeklyChart {
                 scales: {
                     y: {
                         beginAtZero: true,
+                        min: minValue,
+                        max: maxValue,
                         title: {
                             display: true,
-                            text: 'TSS'
+                            text: 'Minutes'
                         }
-                    }
-                }
-            },
-            plugins: {
-                zoom: {
-                    zoom: {
-                        enabled: true,
-                        mode: 'x'
-                    },
-                    pan: {
-                        enabled: true,
-                        mode: 'x'
                     }
                 }
             }
         });
     }
 }
+
+// Made with Bob

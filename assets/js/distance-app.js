@@ -1,11 +1,10 @@
-import { TSSChart } from './tss-chart.js';
+import { DistanceChart } from './distance-chart.js';
 import { Data } from './data.js';
-import { DataUtils } from './data-utils.js';
 
-export class TSSApp {
+export class DistanceApp {
     constructor() {
         this.allData = [];
-        this.chart = new TSSChart(document.getElementById('tssChart').getContext('2d'));
+        this.chart = new DistanceChart(document.getElementById('distanceChart').getContext('2d'));
 
         Papa.parse('/data/training_data.csv', {
             download: true,
@@ -38,16 +37,18 @@ export class TSSApp {
         // Filtra i dati per il range di date specificato
         const filteredData = this.allData.filterByDateRange(startDate, endDate);
         const filteredDates = filteredData.map(row => row.date);
-        const filteredTssValues = filteredData.map(row => parseFloat(row.tss));
+        const filteredDistanceValues = filteredData.map(row => parseFloat(row.distance));
 
         const minValue = 0;
-        const maxValue = Math.ceil(Math.max(...filteredTssValues) / 10) * 10;
+        const maxValue = Math.ceil(Math.max(...filteredDistanceValues) / 5) * 5;
 
         // Crea il grafico con i dati filtrati
-        this.chart.createChart(filteredDates, filteredTssValues, minValue, maxValue);
+        this.chart.createChart(filteredDates, filteredDistanceValues, minValue, maxValue);
     }
 
     updateChart() {
         this.processData();
     }
 }
+
+// Made with Bob
