@@ -7,7 +7,7 @@ export class TSSApp {
         this.allData = [];
         this.chart = new TSSChart(document.getElementById('tssChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {

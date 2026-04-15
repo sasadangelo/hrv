@@ -6,7 +6,7 @@ export class TLApp {
         this.allData = [];
         this.chart = new TLChart(document.getElementById('tlChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {

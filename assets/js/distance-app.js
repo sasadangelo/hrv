@@ -6,7 +6,7 @@ export class DistanceApp {
         this.allData = [];
         this.chart = new DistanceChart(document.getElementById('distanceChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {

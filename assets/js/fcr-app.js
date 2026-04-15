@@ -7,7 +7,7 @@ export class FCRApp {
         this.allData = [];
         this.chart = new FCRChart(document.getElementById('fcrChart').getContext('2d'));
 
-        Papa.parse('/data/fcr_data.csv', {
+        Papa.parse('./data/fcr_data.csv', {
             download: true,
             header: true,
             complete: results => {

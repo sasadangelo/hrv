@@ -6,7 +6,7 @@ export class PMCApp {
         this.allData = [];
         this.chart = new PMCChart(document.getElementById('pmcChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {

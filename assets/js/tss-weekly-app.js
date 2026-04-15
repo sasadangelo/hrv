@@ -7,7 +7,7 @@ export class TSSWeeklyApp {
         this.allData = [];
         this.chart = new TSSWeeklyChart(document.getElementById('tssWeeklyChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {

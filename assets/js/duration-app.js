@@ -6,7 +6,7 @@ export class DurationApp {
         this.allData = [];
         this.chart = new DurationChart(document.getElementById('durationChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {

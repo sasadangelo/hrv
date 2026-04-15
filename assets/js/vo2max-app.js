@@ -7,7 +7,7 @@ export class VO2MaxApp {
         this.allData = [];
         this.chart = new VO2MaxChart(document.getElementById('vo2maxChart').getContext('2d'));
 
-        Papa.parse('/data/vo2max_data.csv', {
+        Papa.parse('./data/vo2max_data.csv', {
             download: true,
             header: true,
             complete: results => {

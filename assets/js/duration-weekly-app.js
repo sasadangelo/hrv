@@ -5,7 +5,7 @@ export class DurationWeeklyApp {
         this.allData = [];
         this.chart = new DurationWeeklyChart(document.getElementById('durationWeeklyChart').getContext('2d'));
 
-        Papa.parse('/data/training_data.csv', {
+        Papa.parse('./data/training_data.csv', {
             download: true,
             header: true,
             complete: results => {
